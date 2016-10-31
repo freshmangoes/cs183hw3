@@ -15,7 +15,7 @@ var app = function() {
 
     //get posts
     self.get_posts = function(){
-        $.getJSON(get_posts_url(0,20), function(data){
+        $.getJSON(posts_url(0,4), function(data){
                 self.vue.posts = data.posts;
                 self.vue.has_more = data.has_more;
                 self.vue.logged_in = data.logged_in;
@@ -23,10 +23,10 @@ var app = function() {
     };
 
     //get posts url
-    function get_posts_url(start_i, end_i){
+    function posts_url(start_i, end_i){
         var pp = {
             start_i: start_i,
-            end_i: end_i,
+            end_i: end_i
         };
         return get_posts_url + "?" + $.param(pp);
     }
