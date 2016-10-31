@@ -34,10 +34,10 @@ var app = function() {
     //get more
     self.get_more = function() {
         var num_posts = self.vue.posts.length;
-        $.getJSON(get_posts_url(num_posts, num_posts + 20), function(data){
+        $.getJSON(posts_url(num_posts, num_posts + 4, function(data){
             self.vue.has_more = data.has_more;
             self.extend(self.vue.posts, data.posts);
-        });
+        }));
     };
 
     //add post button
