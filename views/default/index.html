@@ -11,11 +11,32 @@
 
 <div class="main_content">
 
+    <h2>
+        Posts
+    </h2>
+
     <div id="vue-div" class="display:none">
         <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
-    </div>
+        <div class="button_bar">
+            <button v-if="!is_adding_post" class="btn btn-danger btn-sm" v-on:click="add_post_button()" v-bind:class="{'disabled': !logged_in}">
 
-</div>
+            </button>
+
+            <button v-if="is_adding_post" class="btn btn-warning btn-sm" v-on:click="add_post_button()">
+
+            </button>
+        </div>
+
+        <div v-if="is_adding_post" id="add_post_div">
+            <form>
+                <div class="form-group">
+
+                </div>
+            </form>
+
+        </div>
+
+    </div>
 
 </div>
 
