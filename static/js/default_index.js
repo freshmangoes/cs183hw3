@@ -28,7 +28,7 @@ var app = function() {
             start_i: start_i,
             end_i: end_i,
         };
-        return posts_url + "?" + $.param(pp);
+        return get_posts_url + "?" + $.param(pp);
     }
 
     //get more
