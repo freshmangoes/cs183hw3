@@ -1,5 +1,5 @@
 # These are the controllers for your ajax api.
-
+#testing 2
 def get_posts():
     """This controller is used to get the posts.  Follow what we did in lecture 10, to ensure
     that the first time, we get 4 posts max, and each time the "load more" button is pressed,
