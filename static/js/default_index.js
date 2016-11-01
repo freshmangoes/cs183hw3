@@ -23,12 +23,13 @@ var app = function() {
     };
 
     //get posts url
-    function posts_url(start_i, end_i){
+    function posts_url(start, end){
         var pp = {
-            start_i: start_i,
-            end_i: end_i
+            start: start,
+            end: end
         };
         return get_posts_url + "?" + $.param(pp);
+        // return "start/api/get_posts" + "?" + $.param(pp)
     }
 
     //get more
