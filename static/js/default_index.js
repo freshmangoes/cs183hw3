@@ -85,6 +85,7 @@ var app = function() {
         delimiters: ['${', '}'],
         unsafeDelimiters: ['!{', '}'],
         data: {
+            posts: [],
             is_adding_post: false,
             has_more: false,
             logged_in: false,

@@ -60,6 +60,7 @@
                     <tr v-for="post in posts">
                         <td></td>
                         <td>${post.post_content}</td>
+                        <td>${post.user_email}</td>
                         <td><i class="fa fa-trash-o" v-on:click="delete_post(post.id)"></i></td>
                     </tr>
                 </tbody>
