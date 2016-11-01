@@ -7,7 +7,7 @@
 # - user is required for authentication and authorization
 # - download is for downloading files uploaded in the db (does streaming)
 # -------------------------------------------------------------------------
-
+# test from pycharm vcs
 def get_user_name_from_email(email):
     """Returns a string corresponding to the user first and last names,
     given the user email."""
