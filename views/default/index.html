@@ -12,7 +12,6 @@
 <div class="main_content">
 
     <h2>
-        Posts
     </h2>
 
     <div id="vue-div" class="display:none">
@@ -59,15 +58,12 @@
                 <tbody>
                     <tr v-for="post in posts">
                         <td></td>
-                        <td>${post.post_content}</td>
-                        <td>${post.user_email}</td>
+                        <td>Here's a post ${post.post_content}</td>
                         <td><i class="fa fa-trash-o" v-on:click="delete_post(post.id)"></i></td>
                     </tr>
                 </tbody>
             </table>
-            <div v-if="has_more" class="show_more">
-                <button class="btn btn-default" v-on:click="get_more()">Load More</button>
-            </div>
+            <div v-if="has_more" class="show_more"><button class="btn btn-default" v-on:click="get_more()">Load More</button></div>
         </div>
 
     </div>

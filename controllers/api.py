@@ -14,10 +14,10 @@ def get_posts():
         if i < end - start:
             p = dict(
                 id = r.id,
-                user_email = r.user_email,
+                # user_email = r.user_email,
                 post_content = r.post_content,
-                updated_on = r.updated_on,
-                created_on = r.created_on,
+                # updated_on = r.updated_on,
+                # created_on = r.created_on,
             )
             posts.append(p)
         else:

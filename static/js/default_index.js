@@ -13,6 +13,13 @@ var app = function() {
         }
     };
 
+
+    //enumerate
+    var enumerate = function(v){
+        var k = 0;
+        return v.map(function(e) {e.idx = k++;});
+    };
+
     //get posts
     self.get_posts = function(){
         $.getJSON(posts_url(0,4), function(data){
