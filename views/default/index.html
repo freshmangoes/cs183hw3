@@ -2,10 +2,10 @@
 <!-- Comment -->
 {{block head}}
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
-<script>
-    var get_posts_url = "{{=URL('api', 'get_posts', user_signature=True)}}";
-    var add_post_url = "{{=URL('api', 'add_post', user_signature=True)}}";
-    var del_post_url = "{{=URL('api', 'del_post', user_signature=True)}}";
+    <script>
+    var get_msgs_url = "{{=URL('api', 'get_msgs', user_signature=True)}}";
+    var add_msg_url = "{{=URL('api', 'add_msg', user_signature=True)}}";
+    var del_msg_url = "{{=URL('api', 'del_msg', user_signature=True)}}";
 </script>
 {{end}}
 
@@ -17,27 +17,27 @@
     <div id="vue-div" class="display:none">
         <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
         <div class="button_bar">
-            <button v-if="!is_adding_post" class="btn btn-danger btn-sm" v-on:click="add_post_button()" v-bind:class="{'disabled': !logged_in}">
-                {{=icon_add}}Add post
+            <button v-if="!is_adding_msg" class="btn btn-danger btn-sm" v-on:click="add_msg_button()" v-bind:class="{'disabled': !logged_in}">
+                {{=icon_add}}Add Post
             </button>
-            <button v-if="is_adding_post" class="btn btn-warning btn-sm" v-on:click="add_post_button()">
+            <button v-if="is_adding_msg" class="btn btn-warning btn-sm" v-on:click="add_msg_button()">
                 {{=icon_cancel}}Cancel
             </button>
         </div>
 
-        <div v-if="is_adding_post" id="add_post_div">
+        <div v-if="is_adding_msg" id="add_msg_div">
             <form>
                 <div class="form-group">
-                    <form action="#" v-on:submit.prevent="add_post" class="form-horizontal" enctype="multipart/form-data" method="post">
+                    <form action="#" v-on:submit.prevent="add_msg" class="form-horizontal" enctype="multipart/form-data" method="post">
 
-                        <div class="form-group" id="no_table_post">
-                            <input class="form-control string" id="no_table_post" v-model="form_text" placeholder="Post Text" type="text"/>
+                        <div class="form-group" id="no_table_msg">
+                            <input class="form-control string" id="no_table_msg" v-model="form_text" placeholder="Post Text" type="text"/>
                             <span class="help-block"></span>
                         </div>
 
                         <div class="form-group" id="submit_record__row">
                             <div>
-                                <input class="btn btn-primary" id="add_post_submit" type="submit" value="Submit"/>
+                                <input class="btn btn-primary" id="add_msg_submit" type="submit" value="Submit"/>
                             </div>
                         </div>
 
@@ -56,10 +56,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="post in posts">
+                    <tr v-for="msg in msgs">
                         <td></td>
-                        <td>Here's a post ${post.post_content}</td>
-                        <td><i class="fa fa-trash-o" v-on:click="delete_post(post.id)"></i></td>
+                        <td>Here's a post ${msg.msg_content}</td>
+                        <td><i class="fa fa-trash-o" v-on:click="delete_msg(msg.id)"></i></td>
                     </tr>
                 </tbody>
             </table>
