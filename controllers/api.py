@@ -60,5 +60,3 @@ def edit_msg():
     p.updated_on = datetime.datetime.utcnow()
     p.update_record()
     return response.json(dict(msg=p))
-
-

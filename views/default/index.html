@@ -28,14 +28,14 @@
         <div v-if="is_adding_msg" id="add_msg_div">
             <form action="#" v-on:submit.prevent="add_msg" class="form-horizontal" enctype="multipart/form-data" method="post">
 
-                <div id="no_table_msg__row">
+                <div id="add-new-post">
                     <div>
                         <textarea v-model="form_msg_content" placeholder="Post Text"></textarea>
                         <span class="help-block"></span>
                     </div>
                 </div>
 
-                <div id="submit_record__row">
+                <div id="add-new-post">
                     <div>
                         <input class="btn btn-primary" id="add_msg_submit" type="submit" value="Post" />
                     </div>
@@ -43,7 +43,7 @@
             </form>
         </div>
 
-        <div>
+        <div id="post-content">
             <table style="width: 100%;"><tr v-for="msg in msgs"><td class="post_list">
                 <table style="width: 100%;"><tr><td class="post">
                     <table style="width: 100%;"><tr><td style="padding-top: 5px;">
@@ -56,8 +56,8 @@
                                             <textarea class="form-control string" id="no_table_msg" type="text" v-model="edit_msg_content"></textarea>
                                             <span class="help-block"></span>
                                         </div>
-                                        <div id="submit_record__row">
-                                            <input class="btn btn-primary" id="edit_msg_submit" type="submit" value="Edit"/>
+                                        <div id="post-edit-button">
+                                            <input class="btn btn-primary" id="edit_msg_submit" type="submit" value="Post"/>
                                             <button class="btn btn-warning btn-sm" v-on:click="edit_cancel()">
                                                 {{=icon_cancel}}Cancel
                                             </button>
