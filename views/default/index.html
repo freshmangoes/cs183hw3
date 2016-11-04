@@ -6,6 +6,7 @@
     var msgs_url = "{{=URL('api', 'get_msgs')}}";
     var add_msg_url = "{{=URL('api', 'add_msg', user_signature=True)}}";
     var del_msg_url = "{{=URL('api', 'del_msg', user_signature=True)}}";
+    var edit_msg_url = "{{=URL('api', 'edit_msg', user_signature=True)}}";
 </script>
 {{end}}
 
@@ -17,10 +18,10 @@
     <div id="vue-div" class="display:none">
         <div class="button_bar">
             <button v-if="!is_adding_msg" class="btn btn-danger btn-sm" v-on:click="add_msg_button()" v-bind:class="{'disabled': !logged_in}">
-            {{=icon_add}}Add new post
+                {{=icon_add}}Add new post
             </button>
             <button v-if="is_adding_msg" class="btn btn-warning btn-sm" v-on:click="add_msg_button()">
-            {{=icon_cancel}}Cancel
+                {{=icon_cancel}}Cancel
             </button>
         </div>
 
@@ -44,38 +45,49 @@
         </div>
 
         <div>
-            <table style="">
-                <tr v-for="msg in msgs">
-                    <td class="post_list">
-                        <table>
-                            <tr>
-                                <td class="post">
-                                    <table>
-                                        <tr>
-                                            <td style="padding-top: 5px;">
-                                                ${msg.msg_content}
-                                            </td>
-                                            <tr>
-                                                <td style="padding-right: 5px;">
-                                                    Posted By: ${msg.username}
-                                                </td>
-                                                <td>
-                                                    <i class="fa fa-trash-o" v-on:click="delete_msg(msg.id)"></i>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Created On: ${msg.time_created}
-                                                </td>
-                                            </tr>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
+            <table style=""><tr v-for="msg in msgs"><td class="post_list">
+                <table><tr><td class="post">
+                    <table><tr><td style="padding-top: 5px;">
+                                <div v-if="!is_editing_msg || edit_id !== msg.id">
+                                    ${msg.msg_content}
+                                </div>
+                                <div v-if="is_editing_msg && edit_id === msg.id">
+                                    <form action="#" v-on:submit.prevent="edit_msg" class="form-horizontal" enctype="multipart/form-data" method="post">
+                                        <div id="no_table_msg__row">
+                                            <textarea class="form-control string" id="no_table_msg" type="text" v-model="edit_msg_content"></textarea>
+                                            <span class="help-block"></span>
+                                        </div>
+                                        <div id="submit_record__row">
+                                            <input class="btn btn-primary" id="edit_msg_submit" type="submit" value="Edit"/>
+                                            <button class="btn btn-warning btn-sm" v-on:click="edit_cancel()">
+                                                {{=icon_cancel}}Cancel
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </td></tr>
+                        <tr>
+                            <td style="padding-right: 5px;">
+                                Posted By: ${msg.created_by}
+                            </td>
+                            <td>
+                                <div v-if="msg.is_user && (!is_editing_msg || edit_id !== msg.id)">
+                                    <i class="fa fa-trash-o" v-on:click="delete_msg(msg.id)"></i>
+                                    <i class="fa fa-pencil-square-o" v-on:click="edit_msg_button(msg.id, msg.msg_content)"></i>
+                                </div>
+
+                            </td>
+                        </tr>
+                        <tr><td>
+                            Created On: ${msg.created_on}
+                        </td></tr>
+                        <tr><td>
+                            <div v-if="msg.created_on !== msg.updated_on">
+                                Updated On: ${msg.updated_on}
+                            </div>
+                    </td></tr></table>
+                </td></tr></table>
+            </td></tr></table>
             <div id="load-more" v-if="has_more" class="show_more">
                 <button class="btn btn-default" v-on:click="get_more()">Load more</button>
             </div>

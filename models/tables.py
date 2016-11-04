@@ -15,10 +15,10 @@ def get_user_email():
 db.define_table('msg',
                 Field('user_email', default=auth.user.email if auth.user_id else None),
                 Field('created_by', default=get_user_email),
-                Field('username', default=get_username(get_user_email)),
                 Field('msg_content', 'text'),
-                Field('created_on', default=datetime.datetime.utcnow()),
+                Field('created_on', 'datetime', default=datetime.datetime.utcnow()),
                 Field('updated_on', 'datetime', update=datetime.datetime.utcnow()),
+                Field('is_user', 'boolean', default=False),
                 )
 
 # after defining tables, uncomment below to enable auditing
