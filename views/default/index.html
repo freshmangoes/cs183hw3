@@ -45,9 +45,9 @@
         </div>
 
         <div>
-            <table style=""><tr v-for="msg in msgs"><td class="post_list">
-                <table><tr><td class="post">
-                    <table><tr><td style="padding-top: 5px;">
+            <table style="width: 100%;"><tr v-for="msg in msgs"><td class="post_list">
+                <table style="width: 100%;"><tr><td class="post">
+                    <table style="width: 100%;"><tr><td style="padding-top: 5px;">
                                 <div v-if="!is_editing_msg || edit_id !== msg.id">
                                     ${msg.msg_content}
                                 </div>
@@ -68,9 +68,11 @@
                             </td></tr>
                         <tr>
                             <td style="padding-right: 5px;">
-                                Posted By: ${msg.created_by}
+                                <div style="font-size: 9pt; color: dimgray;">
+                                    Posted By: ${msg.created_by}
+                                </div>
                             </td>
-                            <td>
+                            <td style="text-align: right;">
                                 <div v-if="msg.is_user && (!is_editing_msg || edit_id !== msg.id)">
                                     <i class="fa fa-trash-o" v-on:click="delete_msg(msg.id)"></i>
                                     <i class="fa fa-pencil-square-o" v-on:click="edit_msg_button(msg.id, msg.msg_content)"></i>
@@ -79,10 +81,12 @@
                             </td>
                         </tr>
                         <tr><td>
-                            Created On: ${msg.created_on}
+                            <div style="font-size: 9pt; color: dimgray;">
+                                Created On: ${msg.created_on}
+                            </div>
                         </td></tr>
                         <tr><td>
-                            <div v-if="msg.created_on !== msg.updated_on">
+                            <div style="font-size: 9pt; color: dimgray;" v-if="msg.created_on !== msg.updated_on">
                                 Updated On: ${msg.updated_on}
                             </div>
                     </td></tr></table>
