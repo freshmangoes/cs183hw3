@@ -52,6 +52,7 @@ var app = function() {
             function (data) {
                 $.web2py.enableElement($("#add_msg_submit"));
                 self.vue.msgs.unshift(data.msg);
+                self.vue.is_adding_msg = !self.vue.is_adding_msg;
             }
         )
     };
