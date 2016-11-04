@@ -13,80 +13,67 @@ var app = function() {
         }
     };
 
-
-    //enumerate
-    var enumerate = function(v){
-        var k = 0;
-        return v.map(function(e) {e.idx = k++;});
-    };
-
-    //get msgs
-    self.get_msgs = function(){
-        $.getJSON(msgs_url(0,4), function(data){
-                self.vue.msgs = data.msgs;
-                self.vue.has_more = data.has_more;
-                self.vue.logged_in = data.logged_in;
-            })
-    };
-
-    //get msgs url
-    function msgs_url(start, end){
+    function get_msgs_url(start_idx, end_idx) {
         var pp = {
-            start: start,
-            end: end
+            start_idx: start_idx,
+            end_idx: end_idx
         };
-        return get_msgs_url + "?" + $.param(pp);
+        return msgs_url + "?" + $.param(pp);
     }
 
-    //get more
-    self.get_more = function() {
-        var num_msgs = self.vue.msgs.length;
-        $.getJSON(msgs_url(num_msgs, num_msgs + 4, function(data){
+    self.get_msgs = function () {
+        $.getJSON(get_msgs_url(0, 4), function (data) {
+            self.vue.msgs = data.msgs;
             self.vue.has_more = data.has_more;
-            self.extend(self.vue.msgs, data.msgs);
-        }));
+            self.vue.logged_in = data.logged_in;
+        })
     };
 
-    //add msg button
-    self.add_msg_button = function(){
+    self.get_more = function () {
+        var num_msgs = self.vue.msgs.length;
+        $.getJSON(get_msgs_url(num_msgs, num_msgs + 4), function (data) {
+            self.vue.has_more = data.has_more;
+            self.extend(self.vue.msgs, data.msgs);
+        });
+    };
+
+    self.add_msg_button = function () {
+        // The button to add a msg has been pressed.
         self.vue.is_adding_msg = !self.vue.is_adding_msg;
     };
 
-    //add msg
-    self.add_msg = function() {
+    self.add_msg = function () {
+        // The submit button to add a msg has been added.
         $.post(add_msg_url,
             {
-                // data being sent to server
-                text: self.vue.form_text
+                msg_content: self.vue.form_msg_content,
             },
-            function(data){
+            function (data) {
                 $.web2py.enableElement($("#add_msg_submit"));
                 self.vue.msgs.unshift(data.msg);
             });
     };
 
-    //delete msg
-    self.delete_msg = function(){
+    self.delete_msg = function(msg_id) {
         $.post(del_msg_url,
             {
                 msg_id: msg_id
             },
-            function(){
+            function () {
                 var idx = null;
-                for(var i = 0; i < self.vue.tracks.length; i++){
-                    if(self.vue.msgs[i].id === msg_id){
+                for (var i = 0; i < self.vue.msgs.length; i++) {
+                    if (self.vue.msgs[i].id === msg_id) {
                         idx = i + 1;
                         break;
                     }
                 }
-                if(idx){
-                    self.vue.msgs.splice(idx-1, 1);
+                if (idx) {
+                    self.vue.msgs.splice(idx - 1, 1);
                 }
             }
         )
     };
 
-    // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
         delimiters: ['${', '}'],
@@ -96,7 +83,8 @@ var app = function() {
             is_adding_msg: false,
             has_more: false,
             logged_in: false,
-            form_text: null
+            form_msg_content: null,
+            // username: null,
         },
         methods: {
             get_more: self.get_more,
@@ -104,12 +92,10 @@ var app = function() {
             add_msg: self.add_msg,
             delete_msg: self.delete_msg,
         }
-
     });
 
     self.get_msgs();
     $("#vue-div").show();
-
 
     return self;
 };

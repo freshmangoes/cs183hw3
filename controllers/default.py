@@ -7,28 +7,15 @@
 # - user is required for authentication and authorization
 # - download is for downloading files uploaded in the db (does streaming)
 # -------------------------------------------------------------------------
-# test from pycharm vcs
-def get_user_name_from_email(email):
-    """Returns a string corresponding to the user first and last names,
-    given the user email."""
-    u = db(db.auth_user.email == email).select().first()
-    if u is None:
-        return 'None'
-    else:
-        return ' '.join([u.first_name, u.last_name])
 
 
 def index():
     """
-    This is your main controller.  Here you do almost nothing; you just cause index.html to be served.
-    """
-    return dict()
+    example action using the internationalization operator T and flash
+    rendered by views/default/index.html or views/generic.html
 
-
-@auth.requires_login()
-def edit():
-    """
-    This is the page to create / edit / delete a post.
+    if you need a simple wiki simply replace the two lines below with:
+    return auth.wiki()
     """
     return dict()
 

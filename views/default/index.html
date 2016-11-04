@@ -1,9 +1,9 @@
 {{extend 'layout.html'}}
-<!-- Comment -->
+
 {{block head}}
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
-    <script>
-    var get_msgs_url = "{{=URL('api', 'get_msgs', user_signature=True)}}";
+<script>
+    var msgs_url = "{{=URL('api', 'get_msgs')}}";
     var add_msg_url = "{{=URL('api', 'add_msg', user_signature=True)}}";
     var del_msg_url = "{{=URL('api', 'del_msg', user_signature=True)}}";
 </script>
@@ -11,63 +11,76 @@
 
 <div class="main_content">
 
-    <h2>
-    </h2>
+    <h2>Posts</h2>
+
 
     <div id="vue-div" class="display:none">
-        <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
         <div class="button_bar">
             <button v-if="!is_adding_msg" class="btn btn-danger btn-sm" v-on:click="add_msg_button()" v-bind:class="{'disabled': !logged_in}">
-                {{=icon_add}}Add Post
+            {{=icon_add}}Add new post
             </button>
             <button v-if="is_adding_msg" class="btn btn-warning btn-sm" v-on:click="add_msg_button()">
-                {{=icon_cancel}}Cancel
+            {{=icon_cancel}}Cancel
             </button>
         </div>
 
         <div v-if="is_adding_msg" id="add_msg_div">
-            <form>
-                <div class="form-group">
-                    <form action="#" v-on:submit.prevent="add_msg" class="form-horizontal" enctype="multipart/form-data" method="post">
+            <form action="#" v-on:submit.prevent="add_msg" class="form-horizontal" enctype="multipart/form-data" method="post">
 
-                        <div class="form-group" id="no_table_msg">
-                            <input class="form-control string" id="no_table_msg" v-model="form_text" placeholder="Post Text" type="text"/>
-                            <span class="help-block"></span>
-                        </div>
+                <div id="no_table_msg__row">
+                    <div>
+                        <!--<input class="form-control string" id="no_table_msg" name="msg" type="text" v-model="form_msg_content" placeholder="Post Text"/>-->
+                        <textarea v-model="form_msg_content" placeholder="Post Text"></textarea>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
 
-                        <div class="form-group" id="submit_record__row">
-                            <div>
-                                <input class="btn btn-primary" id="add_msg_submit" type="submit" value="Submit"/>
-                            </div>
-                        </div>
-
-                    </form>
+                <div id="submit_record__row">
+                    <div>
+                        <input class="btn btn-primary" id="add_msg_submit" type="submit" value="Post" />
+                    </div>
                 </div>
             </form>
-
         </div>
 
-        <div class="result_table">
-            <table>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Post</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="msg in msgs">
-                        <td></td>
-                        <td>Here's a post ${msg.msg_content}</td>
-                        <td><i class="fa fa-trash-o" v-on:click="delete_msg(msg.id)"></i></td>
-                    </tr>
-                </tbody>
+        <div>
+            <table style="">
+                <tr v-for="msg in msgs">
+                    <td class="post_list">
+                        <table>
+                            <tr>
+                                <td class="post">
+                                    <table>
+                                        <tr>
+                                            <td style="padding-top: 5px;">
+                                                ${msg.msg_content}
+                                            </td>
+                                            <tr>
+                                                <td style="padding-right: 5px;">
+                                                    Posted By: ${msg.username}
+                                                </td>
+                                                <td>
+                                                    <i class="fa fa-trash-o" v-on:click="delete_msg(msg.id)"></i>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Created On: ${msg.time_created}
+                                                </td>
+                                            </tr>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
             </table>
-            <div v-if="has_more" class="show_more"><button class="btn btn-default" v-on:click="get_more()">Load More</button></div>
+            <div id="load-more" v-if="has_more" class="show_more">
+                <button class="btn btn-default" v-on:click="get_more()">Load more</button>
+            </div>
         </div>
-
     </div>
-
 </div>
 
 <script src="{{=URL('static', 'js/default_index.js')}}"></script>

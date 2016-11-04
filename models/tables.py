@@ -9,18 +9,17 @@
 
 import datetime
 
+def get_user_email():
+    return auth.user.email if auth.user else None
+
 db.define_table('msg',
                 Field('user_email', default=auth.user.email if auth.user_id else None),
+                Field('created_by', default=get_user_email),
+                Field('username', default=get_username(get_user_email)),
                 Field('msg_content', 'text'),
-                Field('created_on', 'datetime', default=datetime.datetime.utcnow()),
+                Field('created_on', default=datetime.datetime.utcnow()),
                 Field('updated_on', 'datetime', update=datetime.datetime.utcnow()),
                 )
-
-# I don't want to display the user email by default in all forms.
-db.msg.user_email.readable = db.msg.user_email.writable = False
-db.msg.msg_content.requires = IS_NOT_EMPTY()
-db.msg.created_on.readable = db.msg.created_on.writable = False
-db.msg.updated_on.readable = db.msg.updated_on.writable = False
 
 # after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
