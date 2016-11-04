@@ -41,6 +41,7 @@ var app = function() {
     self.add_msg_button = function () {
         // The button to add a msg has been pressed.
         self.vue.is_adding_msg = !self.vue.is_adding_msg;
+        self.vue.form_msg_content = null;
     };
 
     self.add_msg = function () {
