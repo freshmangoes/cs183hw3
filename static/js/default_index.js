@@ -21,10 +21,6 @@ var app = function() {
         return msgs_url + "?" + $.param(pp);
     };
 
-    function edit_msg_url(){
-
-    }
-
     self.get_msgs = function () {
         $.getJSON(get_msgs_url(0, 4), function (data) {
             self.vue.msgs = data.msgs;

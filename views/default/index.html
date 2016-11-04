@@ -51,7 +51,7 @@
                                 <div v-if="!is_editing_msg || edit_id !== msg.id">
                                     ${msg.msg_content}
                                 </div>
-                                <div v-if="is_editing_msg && edit_id === msg.id">
+                                <div id="edit_msg_div" v-if="is_editing_msg && edit_id === msg.id">
                                     <form action="#" v-on:submit.prevent="edit_msg" class="form-horizontal" enctype="multipart/form-data" method="post">
                                         <div id="no_table_msg__row">
                                             <textarea class="form-control string" id="no_table_msg" type="text" v-model="edit_msg_content"></textarea>
