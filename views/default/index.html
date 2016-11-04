@@ -17,7 +17,7 @@
 
     <div id="vue-div" class="display:none">
         <div class="button_bar">
-            <button v-if="!is_adding_msg" class="btn btn-danger btn-sm" v-on:click="add_msg_button()" v-bind:class="{'disabled': !logged_in}">
+            <button v-if="!is_adding_msg" class="btn btn-danger btn-sm" v-on:click="add_msg_button()" v-bind:disabled="!logged_in">
                 {{=icon_add}}Add new post
             </button>
             <button v-if="is_adding_msg" class="btn btn-warning btn-sm" v-on:click="add_msg_button()">
