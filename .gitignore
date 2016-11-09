@@ -8,3 +8,15 @@ uploads/*
 .sass-cache
 .sass-cache/*
 
+
+*.iml
+
+.idea/modules.xml
+
+.idea/misc.xml
+
+.idea/libraries/Web2Py_Library.xml
+
+.idea/vcs.xml
+
+.idea/workspace.xml
